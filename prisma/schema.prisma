@@ -1,0 +1,319 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//User stuff
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  role          String?
+  accounts      Account[]
+  sessions      Session[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// Core Drug Information
+
+model Substances {
+  substance_id                  Int                             @id @default(autoincrement())
+  name                          String
+  pretty_name                   String?
+  summary                       String?
+  warnings                      String?
+  aliases                       Aliases[]
+  substanceCategories           SubstanceCategories[]
+  substanceMethods              SubstanceMethods[]
+  substanceEffects              SubstanceEffects[]
+  substanceDurations            SubstanceDuration[]
+  doses                         Doses[]
+  links                         Links[]
+  substanceAfterEffects         SubstanceAfterEffectsDuration[]
+  substanceOnsetDurations       SubstanceOnsetDuration[]
+  substanceChemistry            SubstanceChemistry[]
+  substanceDetection            SubstanceDetection[]
+  pharmacology                  Pharmacology[]
+  substanceTestKitResults       SubstanceTestKitResults[]
+  substanceTwoCombosSubstance_1 SubstanceTwoCombos[]            @relation("SubstanceTwoCombos_substance_1")
+  substanceTwoCombosSubstance_2 SubstanceTwoCombos[]            @relation("SubstanceTwoCombos_substance_2")
+  SubstanceOverdoseEffects      SubstanceOverdoseEffects[]
+  created_by                    String
+  last_edited_by                String
+  created_date                  DateTime
+  last_edit                     DateTime
+}
+
+model Categories {
+  category_id         Int                   @id @default(autoincrement())
+  category            String
+  substanceCategories SubstanceCategories[]
+}
+
+model Units {
+  unit_id                 Int                             @id @default(autoincrement())
+  unit                    String
+  unit_symbol             String?
+  substanceAfterEffects   SubstanceAfterEffectsDuration[]
+  substanceOnsetDurations SubstanceOnsetDuration[]
+  substanceDurations      SubstanceDuration[]
+  doses                   Doses[]
+}
+
+model Methods {
+  method_id               Int                             @id @default(autoincrement())
+  method                  String
+  substanceMethods        SubstanceMethods[]
+  substanceAfterEffects   SubstanceAfterEffectsDuration[]
+  substanceOnsetDurations SubstanceOnsetDuration[]
+  substanceDurations      SubstanceDuration[]
+  doses                   Doses[]
+}
+
+model Effects {
+  effect_id                Int                        @id @default(autoincrement())
+  effect                   String
+  pwlink                   Int?
+  substanceEffects         SubstanceEffects[]
+  substanceOverdoseEffects SubstanceOverdoseEffects[]
+  links                    Links?                     @relation(fields: [pwlink], references: [link_id])
+}
+
+model LinkTypes {
+  link_type_id Int     @id @default(autoincrement())
+  type         String
+  links        Links[]
+}
+
+model SubstanceComboStatus {
+  status_id          Int                  @id @default(autoincrement())
+  status             String
+  substanceTwoCombos SubstanceTwoCombos[]
+}
+
+model Aliases {
+  alias_id     Int        @id @default(autoincrement())
+  substance_id Int
+  alias        String
+  substance    Substances @relation(fields: [substance_id], references: [substance_id])
+}
+
+model SubstanceCategories {
+  substance_id Int
+  category_id  Int
+  substance    Substances @relation(fields: [substance_id], references: [substance_id])
+  category     Categories @relation(fields: [category_id], references: [category_id])
+
+  @@id([substance_id, category_id])
+}
+
+model SubstanceMethods {
+  substance_id          Int
+  method_id             Int
+  substance_method_note String?
+  substance             Substances @relation(fields: [substance_id], references: [substance_id])
+  method                Methods    @relation(fields: [method_id], references: [method_id])
+
+  @@id([substance_id, method_id])
+}
+
+model SubstanceEffects {
+  substance_effects_id Int
+  substance_id         Int
+  effect_id            Int
+  substance            Substances @relation(fields: [substance_id], references: [substance_id])
+  effect               Effects    @relation(fields: [effect_id], references: [effect_id])
+
+  @@id([substance_effects_id])
+}
+
+model SubstanceOverdoseEffects {
+  substance_overdose_effects_id Int
+  substance_id                  Int
+  effect_id                     Int
+  substance                     Substances @relation(fields: [substance_id], references: [substance_id])
+  effect                        Effects    @relation(fields: [effect_id], references: [effect_id])
+
+  @@id([substance_overdose_effects_id])
+}
+
+model SubstanceAfterEffectsDuration {
+  after_effects_duration_id Int        @id @default(autoincrement())
+  substance_id              Int
+  method_id                 Int
+  after_effects_min         Int?
+  after_effects_max         Int?
+  after_effects_unit        Int
+  substance                 Substances @relation(fields: [substance_id], references: [substance_id])
+  method                    Methods    @relation(fields: [method_id], references: [method_id])
+  unit                      Units      @relation(fields: [after_effects_unit], references: [unit_id])
+}
+
+model SubstanceOnsetDuration {
+  onset_duration_id Int        @id @default(autoincrement())
+  substance_id      Int
+  method_id         Int
+  onset_min         Int?
+  onset_max         Int?
+  onset_unit        Int
+  substance         Substances @relation(fields: [substance_id], references: [substance_id])
+  method            Methods    @relation(fields: [method_id], references: [method_id])
+  unit              Units      @relation(fields: [onset_unit], references: [unit_id])
+}
+
+model SubstanceDuration {
+  duration_id   Int        @id @default(autoincrement())
+  substance_id  Int
+  method_id     Int
+  dose_id       Int?
+  duration_min  Int?
+  duration_max  Int?
+  duration_unit Int
+  substance     Substances @relation(fields: [substance_id], references: [substance_id])
+  method        Methods    @relation(fields: [method_id], references: [method_id])
+  unit          Units      @relation(fields: [duration_unit], references: [unit_id])
+}
+
+model Doses {
+  dose_id      Int        @id @default(autoincrement())
+  substance_id Int
+  method_id    Int
+  dose_unit    Int
+  light_min    String?
+  light_max    String?
+  average_min  String?
+  average_max  String?
+  strong_min   String?
+  strong_max   String?
+  heavy_min    String?
+  heavy_max    String?
+  dangerous    String?
+  fatal        String?
+  threshold    String?
+  substance    Substances @relation(fields: [substance_id], references: [substance_id])
+  method       Methods    @relation(fields: [method_id], references: [method_id])
+  unit         Units      @relation(fields: [dose_unit], references: [unit_id])
+}
+
+model Links {
+  link_id               Int                     @id @default(autoincrement())
+  substance_id          Int
+  link_type_id          Int
+  title                 String?
+  author                String?
+  url                   String?
+  substance             Substances              @relation(fields: [substance_id], references: [substance_id])
+  linkType              LinkTypes               @relation(fields: [link_type_id], references: [link_type_id])
+  effects               Effects[]
+  SubstanceComboSources SubstanceComboSources[]
+}
+
+model SubstanceTestKits {
+  test_kit_id             Int                       @id @default(autoincrement())
+  kit_name                String                    @unique
+  substanceTestKitResults SubstanceTestKitResults[]
+}
+
+model SubstanceTestKitResults {
+  result_id        Int               @id @default(autoincrement())
+  substance_id     Int
+  test_kit_id      Int
+  result           String
+  substance        Substances        @relation(fields: [substance_id], references: [substance_id])
+  substanceTestKit SubstanceTestKits @relation(fields: [test_kit_id], references: [test_kit_id])
+}
+
+model SubstanceTwoCombos {
+  combo_id              Int                     @default(autoincrement())
+  substance_1           Int
+  substance_2           Int
+  notes                 String?
+  status                Int
+  substanceStatus       SubstanceComboStatus    @relation(fields: [status], references: [status_id])
+  substance1            Substances              @relation("SubstanceTwoCombos_substance_1", fields: [substance_1], references: [substance_id])
+  substance2            Substances              @relation("SubstanceTwoCombos_substance_2", fields: [substance_2], references: [substance_id])
+  substanceComboSources SubstanceComboSources[]
+
+  @@id([combo_id])
+}
+
+model SubstanceComboSources {
+  substance_combo_sources_id Int                @default(autoincrement())
+  combo_id                   Int
+  source_id                  Int
+  substanceTwoCombos         SubstanceTwoCombos @relation(fields: [combo_id], references: [combo_id])
+  link                       Links              @relation(fields: [source_id], references: [link_id])
+
+  @@id([substance_combo_sources_id])
+}
+
+model SubstanceChemistry {
+  chemistry_id    Int        @default(autoincrement())
+  substance_id    Int
+  chemistry_notes String?
+  substance       Substances @relation(fields: [substance_id], references: [substance_id])
+
+  @@id([chemistry_id])
+}
+
+model SubstanceDetection {
+  detection_id    Int        @default(autoincrement())
+  substance_id    Int
+  detection_notes String?
+  substance       Substances @relation(fields: [substance_id], references: [substance_id])
+
+  @@id([detection_id])
+}
+
+model Pharmacology {
+  pharmacology_id  Int        @default(autoincrement())
+  substance_id     Int
+  pharmacokinetics String?
+  pharmacodynamics String?
+  substance        Substances @relation(fields: [substance_id], references: [substance_id])
+
+  @@id([pharmacology_id])
+}
