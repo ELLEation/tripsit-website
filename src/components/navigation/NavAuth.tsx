@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
 
-const NavAuth = () => {
+const NavAuth = ({ isMobile }) => {
 
     //Get users current auth session (if any)
     const {data: session} = useSession();
@@ -51,18 +51,16 @@ const NavAuth = () => {
                     providers && 
                         Object.values(providers).map( (provider) => 
                         (
-                        <>
-                        
+
                             <button 
                                 type="button"
-                                key={provider.name}
+                                key={`${provider.name}_${isMobile}`}
                                 onClick={() => signIn(provider.id)}
                                 className='black_btn sm:mx-0 mx-4'
                             >
                                 Sign In
                             </button>
-                        
-                        </>
+        
                         )
                 )}
             </>

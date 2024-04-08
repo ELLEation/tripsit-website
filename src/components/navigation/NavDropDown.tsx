@@ -8,7 +8,7 @@ import NavDropDownItem from '@components/navigation/NavDropDownItem'
 //Import Assets
 import down_chevron from '/public/assets/img/ui/down-chevron.png'
 
-const NavDropDown = ({ menuItem }) => {
+const NavDropDown = ({ menuItem, isMobile }) => {
 
     //State that keeps track if the menu is open or closed.
     const [menuState, setMenuState] = useState(false);
@@ -50,7 +50,7 @@ const NavDropDown = ({ menuItem }) => {
             </button>
             <Image 
                 src={down_chevron} 
-                alt='' 
+                alt='Chevron pointing down.' 
                 height='16'
                 width='16'
                 className='self-end sm:mx-0 mx-4'
@@ -60,7 +60,7 @@ const NavDropDown = ({ menuItem }) => {
             {
             items.map( item => (
               <NavDropDownItem 
-                key={item.route}
+                key={`${item.title}_${isMobile}_parent`}
                 item={item} 
                 toggleSubMenu={ () => handleSubMenuToggle(item.title)} 
                 isActive={activeSubMenu === item.title}

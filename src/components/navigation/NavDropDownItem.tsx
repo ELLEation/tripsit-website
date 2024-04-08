@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 //Import Assets
 import down_chevron from '/public/assets/img/ui/down-chevron.png'
 
-const NavDropDownItem = ({ item, toggleSubMenu, isActive }) => {
+const NavDropDownItem = ({ item, toggleSubMenu, isActive, isMobile}) => {
 
     //State to handle if subMenu is shown
     const [subMenuState, setSubMenuState] = useState(false);
@@ -35,7 +35,7 @@ const NavDropDownItem = ({ item, toggleSubMenu, isActive }) => {
                 </button>
                 <Image 
                   src={down_chevron} 
-                  alt='' 
+                  alt='Chevron pointing down.' 
                   height='16'
                   width='16'
                   className='self-end mx-4'
@@ -44,14 +44,13 @@ const NavDropDownItem = ({ item, toggleSubMenu, isActive }) => {
             <div className={`absolute top-8 z-30 w-[250px] min-h-[100px] flex flex-col py-4 bg-zinc-400 rounded-md ${subMenuState ? 'flex' : 'hidden'}`}>
             {
             item.children.map( child => (
-                <div>
                 <NavDropDownItem 
-                    key={child.route} 
+                    key={`${child.route}_${isMobile}_child`} 
                     item={child} 
                     toggleSubMenu={() => {}} 
                     isActive={true} 
+                    isMobile={isMobile}
                 />
-                </div>
             ))}
             </div>
         </div>
@@ -61,7 +60,7 @@ const NavDropDownItem = ({ item, toggleSubMenu, isActive }) => {
     {
         return (
         <Link
-            key={item.route}
+            key={`${item.route}_${isMobile}_link`}
             className="hover:bg-zinc-300 hover:text-zinc-500 px-4 py-1"
             href={item?.route || ''}
             onClick={toggleSubMenu}

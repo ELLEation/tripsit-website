@@ -43,7 +43,7 @@ const Nav = () => {
                 <div className='flex gap-3 md:gap-5'>
                 
                     {/* Dynamically populated items go here */}
-                    <NavItems />
+                    <NavItems isMobile={"desktop"}/>
 
                     {/* Static items that are not likely to change go here */}
                     <Link href="https://discord.gg/tripsit" className='outline_btn'>Join Discord</Link>
@@ -51,7 +51,7 @@ const Nav = () => {
                     <Link href="/webchat" className='outline_btn'>Start Webchat</Link>
 
                     {/* Auth Handler Goes Here */}
-                    <NavAuth />
+                    <NavAuth isMobile={"desktop"}/>
 
                 </div>
             </div>
@@ -71,9 +71,9 @@ const Nav = () => {
 
                     <Link href="/webchat" className='outline_btn mx-3 mb-1'>Start Webchat</Link>
 
-                    <NavItems />  
+                    <NavItems isMobile={"mobile"}/>  
 
-                    <NavAuth />
+                    <NavAuth isMobile={"mobile"}/>
 
                 </div>
                 {

@@ -228,7 +228,7 @@ const menuItems = [
 ]
 
 
-const NavItems = ({  }) => {
+const NavItems = ({ isMobile }) => {
  
 
 
@@ -238,10 +238,15 @@ const NavItems = ({  }) => {
             //Iterates over the object, checks if it has a children property, then passes it to the NavDropDown component
             menuItems.map( (item) => {
                 return item.hasOwnProperty("children") ? (
-                    <NavDropDown menuItem={item} />
+                    <NavDropDown 
+                        key={`${item.title}_${isMobile}_nav`}
+                        menuItem={item} 
+                        isMobile={isMobile}
+                    />
                 ) : (
                     //If the children property doesn't exist it will simply create a link
-                    <Link 
+                    <Link
+                        key={`${item.route}_${isMobile}_nav_link`} 
                         href={item?.route || ""}
                         className='sm:px-0 px-4'
                         >
