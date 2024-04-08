@@ -14,35 +14,35 @@ const Footer = ({}) => {
                     <ul className="mt-3">
                         <li>
                             <Link
-                            href={``}
+                            href={`#greeting`}
                             >
                                 Home
                             </Link>
                         </li>
                         <li>
                             <Link
-                            href={``}
+                            href={`#about`}
                             >
                                 About Us
                             </Link>
                         </li>
                         <li>
                             <Link
-                            href={``}
+                            href={`https://wiki.tripsit.me/wiki/Terms_of_Service`}
                             >
                                 Terms of Service
                             </Link>
                         </li>
                         <li>
                             <Link
-                            href={``}
+                            href={`https://wiki.tripsit.me/wiki/Privacy_Policy`}
                             >
                                 Privacy Policy
                             </Link>
                         </li>
                         <li>
                             <Link
-                            href={``}
+                            href={`https://home.tripsit.me/`}
                             >
                                 Team Portal
                             </Link>                            
@@ -54,35 +54,35 @@ const Footer = ({}) => {
                     <ul className="mt-3">
                         <li>
                             <Link
-                            href={``}
+                            href={`/combo`}
                             >
                                 Combo App
                             </Link>
                         </li>
                         <li>
                             <Link
-                            href={``}
+                            href={`/factsheet`}
                             >
                                 Factsheets
                             </Link>                            
                         </li>
                         <li>
                             <Link
-                            href={``}
+                            href={`https://chat.tripsit.me/`}
                             >
                                 Live Chat
                             </Link>
                         </li>
                         <li>
                             <Link
-                            href={``}
+                            href={`https://play.google.com/store/apps/details?id=me.tripsit.mobile`}
                             >
                                 Android App
                             </Link>                            
                         </li>
                         <li>
                             <Link
-                            href={``}
+                            href={`https://learn.tripsit.me/`}
                             >
                                 Learning Portal
                             </Link>                            
@@ -111,7 +111,7 @@ const Footer = ({}) => {
                             >
                             </Image>
                             <Link
-                            href={``}
+                            href={`https://twitter.com/teamtripsit`}
                             >
                                 Twitter
                             </Link>
@@ -123,7 +123,7 @@ const Footer = ({}) => {
                             >
                             </Image>
                             <Link
-                            href={``}
+                            href={`https://www.facebook.com/TripSitme`}
                             >
                                 Facebook
                             </Link>
@@ -135,7 +135,7 @@ const Footer = ({}) => {
                             >
                             </Image>
                             <Link
-                            href={``}
+                            href={`http://reddit.com/r/TripSit`}
                             >
                                 Reddit
                             </Link>
@@ -147,7 +147,7 @@ const Footer = ({}) => {
                             >
                             </Image>
                             <Link
-                            href={``}
+                            href={`http://element.tripsit.me/`}
                             >
                                 Matrix
                             </Link>
@@ -158,8 +158,9 @@ const Footer = ({}) => {
             <div className="flex justify-between w-full mt-16">
                 <div className="self-start">
                     <p>© Copyright TripSit. All Rights Reserved</p>
-                    <p>Made with ❤️ by Moonbear and Team TripSit</p>
+                    <p>Re-written with ❤️ by Pfish for Moonbear and Team TripSit</p>
                 </div>
+                {/*
                 <div className="flex self-end">
                             <Link
                                 href={`https://discord.gg/tripsit`}
@@ -192,6 +193,7 @@ const Footer = ({}) => {
                                 Ln
                             </Link>
                 </div>
+                */}
             </div>
         </footer>
     )
