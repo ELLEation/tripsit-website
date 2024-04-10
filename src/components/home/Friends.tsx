@@ -1,5 +1,6 @@
 //Import JS dependancies
 import Image from 'next/image'
+import Link from 'next/link'
 
 //Import Assets
 import MAPS from '/public/assets/img/logos/maps.png'
@@ -14,27 +15,33 @@ import rDrugs from '/public/assets/img/logos/rdrugs.png'
 const friends = [
     {
         name: 'MAPS Logo',
-        image: MAPS
+        image: MAPS,
+        url: 'https://maps.org/'
     },
     {
         name: 'BlueLight Logo',
-        image: BlueLight
+        image: BlueLight,
+        url: 'https://bluelight.org/xf/'
     },
     {
         name: 'EffectIndex Logo',
-        image: EffectIndex
+        image: EffectIndex,
+        url: 'https://effectindex.com/'
     },
     {
         name: 'DanceSafe Logo',
-        image: DanceSafe
+        image: DanceSafe,
+        url: 'https://dancesafe.org/'
     },
     {
         name: 'PsychonautWiki Logo',
-        image: PsychonautWiki
+        image: PsychonautWiki,
+        url: 'https://psychonautwiki.org/wiki/Main_Page'
     },
     {
         name: 'r/Drugs Logo',
-        image: rDrugs
+        image: rDrugs,
+        url: 'https://reddit.com/r/drugs'
     },
 ]
 
@@ -50,14 +57,16 @@ const Friends = ({}) => {
             <div className="grid grid-cols-1 gap-8 w-full mt-6 md:grid-cols-6">
                 {
                 friends.map( item  => (
-                    <div className='relative h-48 w-full hover:scale-110'>
-                        <Image
-                            src={item.image}
-                            alt={item.name}
-                            className='w-full h-full object-contain'
-                        >
-                        </Image>
-                </div>
+                    <div className='relative h-48 w-full transition ease-in-out duration-300 hover:scale-110'>
+                        <Link href={item.url}>
+                            <Image
+                                src={item.image}
+                                alt={item.name}
+                                className='w-full h-full object-contain'
+                            >
+                            </Image>
+                        </Link>
+                    </div>
                 ))
                 }
             </div>

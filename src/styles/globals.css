@@ -189,3 +189,36 @@
 .nav-dropdown {
   @apply absolute top-8 sm:left-0 sm:right-0 left-0 z-30 w-[250px] min-h-[300px] flex flex-col py-4 bg-zinc-400 rounded-md
 }
+
+/* Combo Sheet Table */
+.combo-significant-risk {
+  @apply bg-red-500
+}
+
+.combo-greater-risk {
+  @apply bg-orange-500
+}
+
+.combo-minor-risk {
+  @apply bg-yellow-500
+}
+
+.combo-low-risk-synergy {
+  @apply bg-zinc-400
+}
+
+.combo-low-risk-decrease {
+  @apply bg-zinc-400
+}
+
+.combo-low-risk-no-synergy {
+  @apply bg-zinc-400
+}
+
+.combo-undefined {
+  @apply bg-zinc-300
+}
+
+.combo-self {
+  @apply bg-black
+}

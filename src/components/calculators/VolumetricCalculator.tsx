@@ -68,7 +68,7 @@ const VolumetricCalculator = () => {
                         onChange={(e) => setSolvent({...solvent,
                             mg: e.target.value})}
                     />
-                    mg of the substance to {outputs.solvent}ml of solvent
+                    mg of the substance to {outputs.solvent ? outputs.solvent : `0`}ml of solvent
                 </div>
             </div>
             <div className='glassmorphism  m-3'>
@@ -92,7 +92,7 @@ const VolumetricCalculator = () => {
                         onChange={(e) => setConcentration({...concentration,
                             ml: e.target.value})}
                     />
-                    ml of solvent, it will be {outputs.concentration}mg/ml
+                    ml of solvent, it will be {outputs.concentration ? outputs.concentration : `0`}mg/ml
                 </div>
             </div>
             <div className='glassmorphism m-3'>
@@ -116,7 +116,7 @@ const VolumetricCalculator = () => {
                         onChange={(e) => setDose({...dose,
                             mg: e.target.value})}
                     />
-                    mg, you need to take {outputs.dose}ml.
+                    mg, you need to take {outputs.dose ? outputs.dose : `0`}ml.
                 </div>
             </div>
         </section>

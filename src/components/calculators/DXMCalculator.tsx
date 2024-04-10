@@ -213,7 +213,7 @@ const DXMCalculator = () => {
                         <label>
                             I weigh
                             <input
-                                className='ml-2'
+                                className='ml-2 p-1'
                                 placeholder='180'
                                 size='6'
                                 type='number'
@@ -222,7 +222,7 @@ const DXMCalculator = () => {
                             />
                         </label>
                         <select 
-                            className='ml-2'
+                            className='ml-2 p-1'
                             onChange={(e) => decodeWeightModifier(e.target.value)}
                         >
                             <option value={`lbs`}>Lbs</option>
@@ -249,14 +249,14 @@ const DXMCalculator = () => {
                             <input 
                                 type='number'
                                 size='6'
-                                className='mx-1'
+                                className='mx-1 p-1'
                                 onChange={(e) => setAutoCalc({...autoCalc, 
                                     mg: e.target.value})}
                             /> mg dxm per 
                             <input 
                                 type='number'
                                 size='4'
-                                className='mx-1'
+                                className='mx-1 p-1'
                                 onChange={(e) => setAutoCalc({...autoCalc,
                                     ml: e.target.value})}
                             /> ml
@@ -265,7 +265,7 @@ const DXMCalculator = () => {
                         : 
                         (
                         <select 
-                            className='ml-2'
+                            className='ml-2 p-1'
                             onChange={(e) => decodeDXMSubstance(e.target.value)}
                         >
                             {
