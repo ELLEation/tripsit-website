@@ -76,7 +76,7 @@ model Substances {
   substanceOnsetDurations       SubstanceOnsetDuration[]
   substanceChemistry            SubstanceChemistry[]
   substanceDetection            SubstanceDetection[]
-  pharmacology                  Pharmacology[]
+  substancePharmacology         SubstancePharmacology[]
   substanceTestKitResults       SubstanceTestKitResults[]
   substanceTwoCombosSubstance_1 SubstanceTwoCombos[]            @relation("SubstanceTwoCombos_substance_1")
   substanceTwoCombosSubstance_2 SubstanceTwoCombos[]            @relation("SubstanceTwoCombos_substance_2")
@@ -308,7 +308,7 @@ model SubstanceDetection {
   @@id([detection_id])
 }
 
-model Pharmacology {
+model SubstancePharmacology {
   pharmacology_id  Int        @default(autoincrement())
   substance_id     Int
   pharmacokinetics String?
